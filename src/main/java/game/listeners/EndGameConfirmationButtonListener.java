@@ -2,6 +2,7 @@ package game.listeners;
 
 import game.controller.HangmanController;
 import game.gui.GameChatInterface;
+import game.helpers.CountingDown;
 import game.logic.HangmanEngine;
 import game.scoreboard.PlayerScore;
 import game.scoreboard.Scoreboard;
@@ -34,10 +35,12 @@ public class EndGameConfirmationButtonListener implements ActionListener {
     private void closeTheGame() {
         GuessingPlayer hangmanPlayer = hangmanEngine.getHangmanGuessingPlayer();
         scoreboardRepo.save(new PlayerScore(hangmanPlayer.getNickname(), hangmanPlayer.getScore()));
-        String gameEndingMessage = String.format("%s, has ended the game!", hangmanAdminNickname);
-        adminChatInterface.gameServerMessage(gameEndingMessage);
-        guessingPlayerChatInterface.gameServerMessage(gameEndingMessage);
 
-        endGameRunnable.run();
+        new CountingDown(
+                hangmanAdminNickname,
+                guessingPlayerChatInterface::gameServerMessage,
+                adminChatInterface::gameServerMessage,
+                endGameRunnable
+        ).start();
     }
 }

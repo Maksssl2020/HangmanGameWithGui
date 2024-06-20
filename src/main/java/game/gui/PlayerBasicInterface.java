@@ -11,9 +11,9 @@ public class PlayerBasicInterface extends JFrame {
         super("Hangman Game");
         setSize(610,580);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         getContentPane().setBackground(CustomGuiElements.CUSTOM_BLACK_COLOR);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         hangmanLabelImage.setIcon(image);
         hangmanLabelImage.setHorizontalTextPosition(JLabel.CENTER);

@@ -33,6 +33,9 @@ public class HangmanClient extends Thread {
 
             while (!socket.isClosed()) {
                 serverResponse = reader.readLine();
+                if (serverResponse == null) {
+                    break;
+                }
                 writer.println(serverResponse);
             }
         } catch (IOException e) {

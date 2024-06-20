@@ -20,7 +20,11 @@ public class EndGameButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent endGameEvent) {
         ConfirmationWindow endGameConfirmationWindow = new ConfirmationWindow(adminInterface, "End Game Window" ,"Are you sure you want to end the game?");
         JButton yesButton = endGameConfirmationWindow.getYesButton();
-        yesButton.addActionListener(new EndGameConfirmationButtonListener(controller, controller::closeGame));
+
+        yesButton.addActionListener(confirmEndGameEvent -> {
+            new EndGameConfirmationButtonListener(controller, controller::closeGame).actionPerformed(confirmEndGameEvent);
+            endGameConfirmationWindow.dispose();
+        });
 
         endGameConfirmationWindow.setVisible(true);
     }

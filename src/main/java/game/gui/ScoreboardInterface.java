@@ -13,7 +13,7 @@ public class ScoreboardInterface extends TextAreaWindow {
 
     public ScoreboardInterface() {
         setTitle("Hangman Scoreboard");
-        setModal(true);
+        setModal(false);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         actionButton.setText("SEARCH");
         actionButton.addActionListener(e -> searchPlayerScores());
