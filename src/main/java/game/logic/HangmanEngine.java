@@ -11,6 +11,7 @@ public class HangmanEngine {
     private StringBuilder hiddenWordToGuess;
     private GuessingPlayer hangmanGuessingPlayer;
     private AdminPlayer gameAdmin;
+    private boolean isCurrentRoundActive = false;
 
     public HangmanEngine(GuessingPlayer hangmanGuessingPlayer, AdminPlayer gameAdmin) {
         this.hangmanGuessingPlayer = hangmanGuessingPlayer;
@@ -107,6 +108,7 @@ public class HangmanEngine {
         hangmanGuessingPlayer.setTries(7);
         hangmanGuessingPlayer.setGaveUp(false);
         gameAdmin.setAmountOfPossibleHints(3);
+        isCurrentRoundActive = false;
     }
 
     public void clearWordToGuess() {
@@ -141,5 +143,13 @@ public class HangmanEngine {
 
     public void setGameAdmin(AdminPlayer gameAdmin) {
         this.gameAdmin = gameAdmin;
+    }
+
+    public boolean isCurrentRoundActive() {
+        return isCurrentRoundActive;
+    }
+
+    public void setCurrentRoundActive(boolean currentRoundActive) {
+        isCurrentRoundActive = currentRoundActive;
     }
 }

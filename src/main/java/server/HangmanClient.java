@@ -27,7 +27,12 @@ public class HangmanClient extends Thread {
     @Override
     public void run() {
         try {
-            String playerNickname = JOptionPane.showInputDialog("Enter your nickname:");
+            String playerNickname;
+
+            do {
+                playerNickname = JOptionPane.showInputDialog("Enter your nickname:");
+            } while (playerNickname.isEmpty());
+
             writer.println(playerNickname);
             String serverResponse;
 

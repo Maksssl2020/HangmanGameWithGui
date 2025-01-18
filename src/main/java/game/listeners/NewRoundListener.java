@@ -10,10 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NewRoundListener implements ActionListener {
-    private HangmanEngine gameEngine;
-    private AdminPlayerInterface adminInterface;
-    private GuessingPlayerInterface playerInterface;
-    private GameChatInterface adminChatInterface;
+    private final HangmanEngine gameEngine;
+    private final AdminPlayerInterface adminInterface;
+    private final GuessingPlayerInterface playerInterface;
+    private final GameChatInterface adminChatInterface;
 
     public NewRoundListener(HangmanController gameController) {
         gameEngine = gameController.getHangmanEngine();
@@ -36,17 +36,16 @@ public class NewRoundListener implements ActionListener {
             adminChatInterface.gameServerMessage(String.format("%s, you can't start new round because this one hasn't ended yet!", gameEngine.getGameAdmin().getNickname()));
         } else {
             gameEngine.clearGame();
+
             if (gameResult.contains("won")) {
                 gameEngine.getHangmanGuessingPlayer().addPoints(gameEngine.getWordToGuess().getWordPoints());
             }
+
             adminInterface.getCurrentPlayerScore().setText(String.valueOf(gameEngine.getHangmanGuessingPlayer().getScore()));
             adminInterface.getCurrentPlayerAmountOfTries().setText("7");
             adminChatInterface.gameServerMessage(String.format("%s, started new round!", gameEngine.getGameAdmin().getNickname()));
 
-            playerInterface.getHangmanTextArea().setText("");
-            playerInterface.getTriesLeftField().setText("7");
-            playerInterface.updateHangmanImage("C:\\Users\\maksy\\IdeaProjects\\HangmanGameWithGui\\src\\main\\java\\game\\gui\\img\\Hangman_0.png");
-            playerInterface.restoreLetterButtonsDefaultBackgroundColor();
+            playerInterface.clearGameInterface();
         }
     }
 }

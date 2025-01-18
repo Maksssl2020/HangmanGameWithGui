@@ -7,6 +7,8 @@ import game.listeners.OpenScoreboardListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.util.HashMap;
 
 public class GuessingPlayerInterface extends PlayerBasicInterface {
     private final String LETTERS = "ABCDEFGHIJKLMNOPQRTSUVWXYZ";
@@ -28,6 +30,11 @@ public class GuessingPlayerInterface extends PlayerBasicInterface {
         add(hangmanTextArea);
         add(additionalInfoPanel);
         setVisible(true);
+
+        SwingUtilities.invokeLater(() -> {
+            additionalInfoPanel.revalidate();
+            additionalInfoPanel.repaint();
+        });
     }
 
     private void initLetterButtons() {
@@ -48,6 +55,10 @@ public class GuessingPlayerInterface extends PlayerBasicInterface {
         hangmanTextArea = new MyTextField(false, false, CustomGuiElements.CUSTOM_DARK_GRAY_COLOR, CustomGuiElements.CUSTOM_WHITE_COLOR, CustomGuiElements.COMPOUND_BORDERS, new Font(Font.MONOSPACED, Font.PLAIN, 42));
         hangmanTextArea.setBounds(10, 370, 580, 75);
         hangmanTextArea.setHorizontalAlignment(SwingConstants.CENTER);
+
+        HashMap<TextAttribute, Object> fontAttributes = new HashMap<>();
+        fontAttributes.put(TextAttribute.TRACKING, 0.2);
+        hangmanTextArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 36).deriveFont(fontAttributes));
     }
 
     private void initAdditionalPanelInfo() {
@@ -85,10 +96,21 @@ public class GuessingPlayerInterface extends PlayerBasicInterface {
         }
     }
 
+    public void clearGameInterface() {
+        getHangmanTextArea().setText("");
+        getTriesLeftField().setText("7");
+        restoreLetterButtonsDefaultBackgroundColor();
+        updateHangmanImage("C:\\Users\\maksy\\IdeaProjects\\HangmanGameWithGui\\src\\main\\java\\game\\gui\\img\\Hangman_0.png");
+    }
+
     public void restoreLetterButtonsDefaultBackgroundColor() {
         for (JButton letterButton : letterButtons) {
             letterButton.setBackground(CustomGuiElements.CUSTOM_DARK_GRAY_COLOR);
         }
+    }
+
+    public void setHangmanTextAreaContent(String content) {
+        hangmanTextArea.setText(content);
     }
 
     public JTextField[] getAdditionalInfoFields() {

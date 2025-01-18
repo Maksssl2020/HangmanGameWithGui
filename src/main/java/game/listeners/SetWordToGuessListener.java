@@ -48,16 +48,17 @@ public class SetWordToGuessListener extends KeyAdapter implements ActionListener
             adminChatInterface.gameServerMessage(String.format("%s: You can't set empty word to guess!", adminNickname));
         } else if (currentWordToGuess.isPresent() && isGameOver.contains("not guessed!")) {
             adminChatInterface.gameServerMessage(String.format("%s: You can't set new word to guess, current game is not over!", adminNickname));
-        } else if (isGameOver.contains("not guessed!")) {
+        } else if (isGameOver.contains("not guessed!") || hangmanEngine.isCurrentRoundActive()) {
             adminChatInterface.gameServerMessage(String.format("%s: You can't set new word to guess, current game is not over!", adminNickname));
         } else {
             hangmanEngine.setWordToGuess(enteredWordByAdmin);
+            hangmanEngine.setCurrentRoundActive(true);
             String messageFotBothPlayers = String.format("%s set new word to guess!", adminNickname);
 
             adminInterface.getSettingWordToGuessField().setText("");
             adminChatInterface.gameServerMessage(messageFotBothPlayers);
 
-            playerInterface.getHangmanTextArea().setText(hangmanEngine.getHiddenWord());
+            playerInterface.setHangmanTextAreaContent(hangmanEngine.getHiddenWord());
             playerInterface.getWordPointsField().setText(String.format("Word points: %d", hangmanEngine.getWordToGuess().getWordPoints()));
             guessingPlayerChatInterface.gameServerMessage(messageFotBothPlayers);
         }
